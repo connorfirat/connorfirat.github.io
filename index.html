@@ -29,17 +29,21 @@
       }
 
       #controls {
-        width: 500px;
+        width: 550px;
+        height: 250px;  
+        opacity: 75%;
       }
 
       #outer-container {
         padding: 15px;
-        width: 500px;
+        width: 100%;
+        height: 100%;  
       }
 
       #description {
         padding: 10px 10px 0px 10px;
         font-size: 14pt;
+        width: 100%; 
       }
 
       #titleDiv {
@@ -73,10 +77,8 @@
       ) {
         const layer = new FeatureLayer({
         portalItem: {
-            id: "ed32953f37564730ac61bc384fea2776"
+            id: "ed32953f37564730ac61bc384fea2776" 
           },
-          outFields: ["Accident_Count"],
-          definitionExpression: "BUFF_DIST_ft = 500.00101600203334"
         });       
         
         const map = new Map({
@@ -93,10 +95,10 @@
                 wkid: 4326
               },
               x: -85.25,
-              y: 35.1,
-              z: 45000 // meters
+              y: 35.07,
+              z: 58000 // meters 
             },
-            heading: 0,
+            heading: 0, 
             tilt: 0.15
           }
         });
@@ -109,7 +111,7 @@
           histogram({
             layer: layer,
             field: field,
-            numBins: 100,
+            numBins: 557,
             minValue: min,
             maxValue: max
           }).then(function(histogramResponse) {
@@ -119,6 +121,11 @@
               max: max,
               values: [min, max],
               excludedBarColor: "#524e4e",
+              rangeLabelsVisible: true,
+              labelsVisible: true,
+              labelInputsEnabled: true,
+              precision: 0,
+              steps: 1,                 
               rangeType: "between",
               container: document.getElementById("slider-container")
             });
@@ -157,15 +164,14 @@
   <body>
     <div id="viewDiv"></div>
     <div id="titleDiv" class="esri-widget">
-      <div id="titleText">Chattanooga Tennessee</div>
-      <div>Accident Bufffers</div>
+      <div id="titleText">Chattanooga, Tennessee</div>
+      <div>November 2016 - December 2019 Accidents Occuring Around Intersections</div>
     </div>
     <div id="controls" class="esri-widget">
-      <div id="description" class="esri-widget">Accident Buffers</div>
+      <div id="description" class="esri-widget">Aggregated Amount of Accidents Occuring in 500ft Buffers</div>
       <div id="outer-container" class="esri-widget">
         <div id="slider-container"></div>
       </div>
     </div>
   </body>
 </html>
-
