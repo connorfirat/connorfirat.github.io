@@ -18,7 +18,8 @@
     />
     <script src="https://js.arcgis.com/4.14/"></script>
 
-    <style>
+
+<style>
       html,
       body,
       #viewDiv {
@@ -29,21 +30,17 @@
       }
 
       #controls {
-        width: 550px;
-        height: 250px;  
-        opacity: 75%;
+        width: 500px;
       }
 
       #outer-container {
         padding: 15px;
-        width: 100%;
-        height: 100%;  
+        width: 500px;
       }
 
       #description {
         padding: 10px 10px 0px 10px;
         font-size: 14pt;
-        width: 100%; 
       }
 
       #titleDiv {
@@ -57,7 +54,7 @@
       }
     </style>
 
-    <script>
+<script>
       require([
         "esri/Map",
         "esri/views/SceneView",
@@ -77,8 +74,10 @@
       ) {
         const layer = new FeatureLayer({
         portalItem: {
-            id: "ed32953f37564730ac61bc384fea2776" 
+            id: "ed32953f37564730ac61bc384fea2776"
           },
+          outFields: ["Accident_Count"],
+          definitionExpression: "BUFF_DIST_ft = 500.00101600203334"
         });       
         
         const map = new Map({
@@ -95,10 +94,10 @@
                 wkid: 4326
               },
               x: -85.25,
-              y: 35.07,
-              z: 58000 // meters 
+              y: 35.1,
+              z: 45000 // meters
             },
-            heading: 0, 
+            heading: 0,
             tilt: 0.15
           }
         });
@@ -111,7 +110,7 @@
           histogram({
             layer: layer,
             field: field,
-            numBins: 557,
+            numBins: 100,
             minValue: min,
             maxValue: max
           }).then(function(histogramResponse) {
@@ -121,11 +120,6 @@
               max: max,
               values: [min, max],
               excludedBarColor: "#524e4e",
-              rangeLabelsVisible: true,
-              labelsVisible: true,
-              labelInputsEnabled: true,
-              precision: 0,
-              steps: 1,                 
               rangeType: "between",
               container: document.getElementById("slider-container")
             });
@@ -159,6 +153,7 @@
 });        
       });
     </script>
+
   </head>
 
   <body>
